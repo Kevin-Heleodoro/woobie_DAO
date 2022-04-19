@@ -26,9 +26,9 @@ const sdk = new ThirdwebSDK(wallet);
 (async () => {
 	try {
 		const address = await sdk.getSigner().getAddress();
-		console.log(`SDK initialized by address: ${address}`);
+		console.log(`1 => SDK initialized by address: ${address}`);
 	} catch (err) {
-		console.error(`Failed to get apps from the sdk ${err}`);
+		console.error(`1 => Failed to get apps from the sdk ${err}`);
 		process.exit(1);
 	}
 })();
