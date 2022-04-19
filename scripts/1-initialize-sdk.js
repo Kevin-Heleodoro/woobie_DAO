@@ -16,14 +16,19 @@ if (!process.env.WALLET_ADDRESS || process.env.WALLET_ADDRESS === '') {
 	console.log('🛑 Wallet Address not found 🛑 ');
 }
 
-const provider = new ethers.providers.JsonRpcProvider(
-	process.env.ALCHEMY_API_URL
-);
-const wallet = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
-const sdk = new ThirdwebSDK(wallet);
+// const provider = new ethers.providers.JsonRpcProvider(
+// 	process.env.ALCHEMY_API_URL
+// );
+// const wallet = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
+// const sdk = new ThirdwebSDK(wallet);
 
-// One of those good ol' IIFEs you've heard so much about
-(async () => {
+const sdk = new ThirdwebSDK(
+	new ethers.Wallet(
+		process.env.PRIVATE_KEY,
+		ethers.getDefaultProvider('https://rinkeby-light.eth.linkpool.io/')
+	)
+);
+const getAddress = async () => {
 	try {
 		const address = await sdk.getSigner().getAddress();
 		console.log(`1 => SDK initialized by address: ${address}`);
@@ -31,7 +36,9 @@ const sdk = new ThirdwebSDK(wallet);
 		console.error(`1 => Failed to get apps from the sdk ${err}`);
 		process.exit(1);
 	}
-})();
+};
+
+getAddress();
 
 export default sdk;
 // node scripts/1-initialize-sdk.js
